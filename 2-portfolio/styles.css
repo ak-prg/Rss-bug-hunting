@@ -33,11 +33,9 @@ body {
 }
 
 .gallery {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  gap: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   max-width: 1000px;
   margin: 0 auto;
 }
