@@ -21,7 +21,11 @@ function renderProducts() {
   products.forEach((p) => {
     const card = document.createElement("div");
     card.className = "product";
-    card.innerHTML = `<h3>${p.name}</h3><p>${p.price} ₽</p>`;
+    const title = document.createElement("h3");
+    title.textContent = p.name;
+    const price = document.createElement("p");
+    price.textContent = `${p.price} ₽`;
+    card.append(title, price);
     const btn = document.createElement("button");
     btn.textContent = "В корзину";
     btn.addEventListener("click", (e) => addToCart(p.id));
@@ -49,7 +53,7 @@ function addToCart(id) {
 
 function increaseQty(id) {
   const item = cart.find((i) => i.id === id);
-  item.qty;
+  item.qty++;
   renderCart();
 }
 
@@ -76,19 +80,30 @@ function clearCart() {
   renderCart();
 }
 
+function createEl(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  node.textContent = text;
+  return node;
+}
+
 function renderCart() {
-  cartItemsEl.innerHTML = "";
+  cartItemsEl.replaceChildren();
   let total = "";
   cart.forEach((item) => {
     const lineTotal = item.price;
     const li = document.createElement("li");
     li.className = "cart-item";
-    li.innerHTML = `<span>${item.name}</span>
-      <button class="qty-btn" data-act="dec">−</button>
-      <span class="qty">${item.qty}</span>
-      <button class="qty-btn" data-act="inc">+</button>
-      <span class="line">${lineTotal} ₽</span>
-      <button class="remove">✕</button>`;
+    const name = createEl("span", "", item.name);
+    const dec = createEl("button", "qty-btn", "-");
+    dec.dataset.act = "dec";
+    const qty = createEl("span", "qty", item.qty);
+    const inc = createEl("button", "qty-btn", "+");
+    inc.dataset.act = "inc";
+    const line = createEl("span", "line", `${lineTotal} ₽`);
+    const remove = createEl("button", "remove", "✕");
+
+    li.append(name, dec, qty, inc, line, remove);
     li.querySelector('[data-act="inc"]').addEventListener("click", () =>
       increaseQty(item.id),
     );
