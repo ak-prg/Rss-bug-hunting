@@ -44,7 +44,19 @@ function render() {
   items.forEach((p) => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<h3>${p.name}</h3><p class="cat">${p.category}</p><p class="price">$${p.price}</p>`;
+
+    const title = document.createElement("h3");
+    title.textContent = p.name;
+
+    const cat = document.createElement("p");
+    cat.className = "cat";
+    cat.textContent = p.category;
+
+    const price = document.createElement("p");
+    price.className = "price";
+    price.textContent = `$${p.price}`;
+
+    card.replaceChildren(title, cat, price);
     grid.appendChild(card);
   });
   countEl.textContent = products.length;
