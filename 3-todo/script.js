@@ -39,7 +39,10 @@ function clearCompleted() {
 }
 
 function getVisibleTasks() {
-  return tasks;
+  let visible = tasks;
+  if (currentFilter == 'done') visible = tasks.filter((t) => t.done);
+  else if (currentFilter == 'active') visible = tasks.filter((t) => !t.done);
+  return visible;
 }
 
 function updateCounter() {
