@@ -70,15 +70,20 @@ function removeItem(id) {
 }
 
 function applyPromo() {
-  if ((promoInput.value = "SALE10")) {
+  if (promoInput.value === "SALE10") {
     discount = 0.1;
-  }
+  } else resetDiscount();
   renderCart();
 }
 
 function clearCart() {
   cart.splice(0, 1);
   renderCart();
+}
+
+function resetDiscount() {
+  promoInput.value = "";
+  discount = 0;
 }
 
 function createEl(tag, className, text) {
