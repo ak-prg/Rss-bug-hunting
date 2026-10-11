@@ -34,7 +34,7 @@ function deleteTask(id) {
 }
 
 function clearCompleted() {
-  tasks = [];
+  tasks = tasks.filter((t) => !t.done);
   render();
 }
 
@@ -46,7 +46,8 @@ function getVisibleTasks() {
 }
 
 function updateCounter() {
-  counter.textContent = "Активных задач: " + tasks.length;
+  active = tasks.filter((t) => !t.done);
+  counter.textContent = "Активных задач: " + active.length;
 }
 
 function render() {
