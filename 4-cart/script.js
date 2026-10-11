@@ -96,6 +96,12 @@ function createEl(tag, className, text) {
 
 function renderCart() {
   cartItemsEl.replaceChildren();
+  if (!cart.length) {
+    emptyMsg.hidden = false;
+    badgeEl.textContent = 0;
+    totalEl.textContent = 0;
+    return;
+  }
   let total = 0;
   cart.forEach((item) => {
     const lineTotal = item.price * item.qty;
