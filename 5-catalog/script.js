@@ -62,7 +62,7 @@ function render() {
     card.replaceChildren(title, cat, price);
     grid.appendChild(card);
   });
-  countEl.textContent = products.length;
+  countEl.textContent = items.length;
 }
 
 searchInput.addEventListener("input", render);
