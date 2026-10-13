@@ -17,37 +17,52 @@ const grid = document.getElementById("grid");
 const countEl = document.getElementById("count");
 
 function getFiltered() {
-  let result = products;
+  let result = [...products];
   const search = searchInput.value;
   const category = categorySelect.value;
   const sort = sortSelect.value;
 
   if (search) {
-    result = result.filter((p) => p.name === search);
+    result = result.filter((p) =>
+      p.name.toLowerCase().includes(search.toLowerCase()),
+    );
   }
 
   if (category !== "all") {
-    result = products.filter((p) => p.category !== category);
+    result = result.filter((p) => p.category === category);
   }
 
   if (sort === "asc") {
-    result.sort((a, b) => b.price - a.price);
-  } else if (sort === "desc") {
     result.sort((a, b) => a.price - b.price);
-  }
+  } else if (sort === "desc") {
+    result.sort((a, b) => b.price - a.price);
+  } 
 
   return result;
 }
 
 function render() {
+  grid.replaceChildren();
   const items = getFiltered();
   items.forEach((p) => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<h3>${p.name}</h3><p class="cat">${p.category}</p><p class="price">$${p.price}</p>`;
+
+    const title = document.createElement("h3");
+    title.textContent = p.name;
+
+    const cat = document.createElement("p");
+    cat.className = "cat";
+    cat.textContent = p.category;
+
+    const price = document.createElement("p");
+    price.className = "price";
+    price.textContent = `$${p.price}`;
+
+    card.replaceChildren(title, cat, price);
     grid.appendChild(card);
   });
-  countEl.textContent = products.length;
+  countEl.textContent = items.length;
 }
 
 searchInput.addEventListener("input", render);
@@ -56,4 +71,9 @@ sortSelect.addEventListener("change", render);
 
 resetBtn.addEventListener("click", () => {
   searchInput.value = "";
+  categorySelect.value = "all";
+  sortSelect.value = "default";
+  render();  
 });
+
+render();
