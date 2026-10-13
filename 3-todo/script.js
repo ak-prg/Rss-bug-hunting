@@ -40,13 +40,13 @@ function clearCompleted() {
 
 function getVisibleTasks() {
   let visible = tasks;
-  if (currentFilter == 'done') visible = tasks.filter((t) => t.done);
-  else if (currentFilter == 'active') visible = tasks.filter((t) => !t.done);
+  if (currentFilter == "done") visible = tasks.filter((t) => t.done);
+  else if (currentFilter == "active") visible = tasks.filter((t) => !t.done);
   return visible;
 }
 
 function updateCounter() {
-  active = tasks.filter((t) => !t.done);
+  const active = tasks.filter((t) => !t.done);
   counter.textContent = "Активных задач: " + active.length;
 }
 
